@@ -1,0 +1,4 @@
+.clangd/
+*.class
+compile_commands.json
+*.so
