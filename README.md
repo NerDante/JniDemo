@@ -1,3 +1,5 @@
+下面以最简单的HelloWorld为例，介绍JNI的基本开发流程
+-----
 ## 环境准备
 - 安装jdk
 - 配置环境变量，JAVA_HOME，将项目目录加入LD_LIBRARY_PATH

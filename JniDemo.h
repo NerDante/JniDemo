@@ -23,6 +23,22 @@ JNIEXPORT void JNICALL Java_JniDemo_print
 JNIEXPORT jstring JNICALL Java_JniDemo_getLine
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     JniDemo
+ * Method:    sumArray
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_JniDemo_sumArray
+  (JNIEnv *, jobject, jintArray);
+
+/*
+ * Class:     JniDemo
+ * Method:    initInt2DArray
+ * Signature: (I)[[I
+ */
+JNIEXPORT jobjectArray JNICALL Java_JniDemo_initInt2DArray
+  (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif
