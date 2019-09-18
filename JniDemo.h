@@ -39,6 +39,14 @@ JNIEXPORT jint JNICALL Java_JniDemo_sumArray
 JNIEXPORT jobjectArray JNICALL Java_JniDemo_initInt2DArray
   (JNIEnv *, jclass, jint);
 
+/*
+ * Class:     JniDemo
+ * Method:    accessFiled
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_JniDemo_accessFiled
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

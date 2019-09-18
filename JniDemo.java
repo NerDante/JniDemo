@@ -1,9 +1,14 @@
 class JniDemo{
+    
+    private String s;
+    private static int si;
+
     // native method
     private native void print();
     private native String getLine(String prompt);
     private native int sumArray(int[] array);
     private static native int[][] initInt2DArray(int size);
+    private native void accessFiled();
 
     public static void main(String args[]) {
         JniDemo jniDemo = new JniDemo();
@@ -33,6 +38,14 @@ class JniDemo{
             }
             System.out.println();
         }
+
+        // access filed
+        jniDemo.s = "abc";
+        si = 100;
+        jniDemo.accessFiled();
+        System.out.println("In Java:");
+        System.out.println("    jniDemo.s = \"" + jniDemo.s + "\"" + " si = " + si);
+
     }
 
     static {

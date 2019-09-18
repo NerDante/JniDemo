@@ -90,3 +90,49 @@ JNIEXPORT jobjectArray JNICALL Java_JniDemo_initInt2DArray(JNIEnv *env, jclass c
 
     return result;
 }
+
+
+JNIEXPORT void JNICALL Java_JniDemo_accessFiled(JNIEnv *env, jobject obj)
+{
+    jfieldID fid_s, fid_si; // store the field ID
+    jstring jstr;
+    const char *str;
+    jint si;
+
+    // get a reference to obj's class
+    jclass cls = (*env)->GetObjectClass(env, obj);
+    printf("In c:\n");
+
+    // look for thefield in cls
+    fid_s = (*env)->GetFieldID(env, cls, "s", "Ljava/lang/String;"); // "Ljava/lang/String" is JNI field descriptors
+    if(fid_s == NULL)
+    {
+        return;
+    }
+    fid_si = (*env)->GetStaticFieldID(env, cls, "si", "I"); // "Ljava/lang/String" is JNI field descriptors
+    if(fid_si == NULL)
+    {
+        return;
+    }
+
+    // read the field
+    jstr = (*env)->GetObjectField(env, obj, fid_s);
+    str = (*env)->GetStringUTFChars(env, jstr, NULL);
+    if(str == NULL) {
+        return;
+    }
+    si = (*env)->GetStaticIntField(env, cls, fid_si);
+    
+    printf("    jniDemo.s = \"%s\", si = %d\n", str, si);
+    (*env)->ReleaseStringUTFChars(env, jstr, str);
+
+    // create a new string and overwrite the instance field
+    jstr = (*env)->NewStringUTF(env, "from c 123");
+    if(jstr == NULL)
+    {
+        return;
+    }
+    (*env)->SetObjectField(env, obj, fid_s, jstr);
+
+    (*env)->SetStaticIntField(env, cls, fid_si, 200);
+}
