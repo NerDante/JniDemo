@@ -9,6 +9,14 @@ class JniDemo{
     private native int sumArray(int[] array);
     private static native int[][] initInt2DArray(int size);
     private native void accessFiled();
+    private native void nativeMethod();
+
+    private void callback() {
+        System.out.println("In Java");
+    }
+    private static void callback_static() {
+        System.out.println("In Java, static");
+    }
 
     public static void main(String args[]) {
         JniDemo jniDemo = new JniDemo();
@@ -45,6 +53,9 @@ class JniDemo{
         jniDemo.accessFiled();
         System.out.println("In Java:");
         System.out.println("    jniDemo.s = \"" + jniDemo.s + "\"" + " si = " + si);
+
+        // method calls
+        jniDemo.nativeMethod();
 
     }
 

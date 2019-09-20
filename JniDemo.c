@@ -136,3 +136,24 @@ JNIEXPORT void JNICALL Java_JniDemo_accessFiled(JNIEnv *env, jobject obj)
 
     (*env)->SetStaticIntField(env, cls, fid_si, 200);
 }
+
+JNIEXPORT void JNICALL Java_JniDemo_nativeMethod(JNIEnv *env, jobject obj)
+{
+    jclass cls = (*env)->GetObjectClass(env, obj);
+    jmethodID mid = (*env)->GetMethodID(env, cls, "callback", "()V");
+    if(mid == NULL)
+    {
+        return; // method not found
+    }
+
+    printf("In C:\n");
+    (*env)->CallVoidMethod(env, obj, mid);
+
+    mid = (*env)->GetStaticMethodID(env, cls, "callback_static", "()V");
+    if(mid == NULL)
+    {
+        return;
+    }
+
+    (*env)->CallStaticVoidMethod(env, cls, mid);
+}
