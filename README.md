@@ -1,10 +1,10 @@
-下面以最简单的HelloWorld为例，介绍JNI的基本开发流程, JniDemo 开发使用流程与下面类似，但时涉及更多的JNI知识.
------
+
 ## 环境准备
 - 安装jdk
 - 配置环境变量，JAVA_HOME，将项目目录加入LD_LIBRARY_PATH
 
 ## 过程详解
+下面以最简单的HelloWorld为例，介绍JNI的基本开发流程, JniDemo 开发使用流程与下面类似，但涉及更多的JNI知识.
 1. 创建HelloWorld.java,内容如下
 ```java
 class HelloWorld {
