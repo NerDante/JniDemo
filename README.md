@@ -52,3 +52,6 @@ java HelloWorld
 ```
 *result:*
 > hello world!
+
+## 参考资料
+[Java Programming Tutorial Java Native Interface (JNI)](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
