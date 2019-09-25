@@ -1,4 +1,5 @@
-class JniDemo{
+
+public class JniDemo{
     
     private String s;
     private static int si;
@@ -10,6 +11,10 @@ class JniDemo{
     private static native int[][] initInt2DArray(int size);
     private native void accessFiled();
     private native void nativeMethod();
+
+    private native String[] getFileList();
+
+    private native TestInfo handleUserObject(TestInfo info);
 
     private void callback() {
         System.out.println("In Java");
@@ -57,6 +62,20 @@ class JniDemo{
         // method calls
         jniDemo.nativeMethod();
 
+        // jni return String[] 
+        String[] strArr = jniDemo.getFileList();
+        for (int i = 0; i < strArr.length; i++)
+        {
+            System.out.println("" + i + " " + strArr[i]);
+        }
+
+        // handle user defined class 
+        TestInfo ti = new TestInfo(100, "java set");
+        // System.out.println("index = " + ti.index);
+        // System.out.println("name = " + ti.name);
+        TestInfo ti2 = jniDemo.handleUserObject(ti);
+        System.out.println("index = " + ti2.index);
+        System.out.println("name = " + ti2.name);
     }
 
     static {

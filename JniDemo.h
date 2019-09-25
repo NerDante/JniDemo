@@ -55,6 +55,22 @@ JNIEXPORT void JNICALL Java_JniDemo_accessFiled
 JNIEXPORT void JNICALL Java_JniDemo_nativeMethod
   (JNIEnv *, jobject);
 
+/*
+ * Class:     JniDemo
+ * Method:    getFileList
+ * Signature: ()[Ljava/lang/String;
+ */
+JNIEXPORT jobjectArray JNICALL Java_JniDemo_getFileList
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     JniDemo
+ * Method:    handleUserObject
+ * Signature: (LTestInfo;)LTestInfo;
+ */
+JNIEXPORT jobject JNICALL Java_JniDemo_handleUserObject
+  (JNIEnv *, jobject, jobject);
+
 #ifdef __cplusplus
 }
 #endif

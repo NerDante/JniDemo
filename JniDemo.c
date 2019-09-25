@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "JniDemo.h"
 #include "jni.h"
 
@@ -156,4 +157,62 @@ JNIEXPORT void JNICALL Java_JniDemo_nativeMethod(JNIEnv *env, jobject obj)
     }
 
     (*env)->CallStaticVoidMethod(env, cls, mid);
+}
+
+// example for return String[] in java
+JNIEXPORT jobjectArray JNICALL Java_JniDemo_getFileList(JNIEnv *env, jobject obj)
+{
+    jobjectArray result;
+    jclass cls = (*env)->GetObjectClass(env, obj);
+    jclass str_cls = (*env)->FindClass(env, "java/lang/String");
+    char *list[5] = {"hallo.mp3", "lydia.mp3", "my love.mp3", "go", "中文测试"}; // fake data
+
+    result = (*env)->NewObjectArray(env, 5, str_cls, NULL); // 注意：此处的jclass 是 str_cls, 而非 cls
+    if(result == NULL)
+    {
+        return NULL;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        (*env)->SetObjectArrayElement(env, result, i, (*env)->NewStringUTF(env, list[i]));
+    }
+
+    return result;
+}
+
+JNIEXPORT jobject JNICALL Java_JniDemo_handleUserObject(JNIEnv *env, jobject demo, jobject info)
+{
+    jclass clsIn, clsOut;
+    
+    clsIn = (*env)->GetObjectClass(env, info);
+    if(clsIn == NULL)
+    {
+        printf("get object class failed\n");
+        return NULL;
+    }
+
+    //从Java层传递对象到native
+    {
+        jboolean iscopy;
+        jfieldID intId = (*env)->GetFieldID(env, clsIn, "index", "I");
+        jfieldID strId = (*env)->GetFieldID(env, clsIn, "name", "Ljava/lang/String;");
+
+        jint index = (*env)->GetIntField(env, info, intId);
+        printf("In index = %d\n", index);
+
+        jstring name = (*env)->GetObjectField(env, info, strId);
+        const char *locStr = (*env)->GetStringUTFChars(env, name, &iscopy);
+        printf("In name = %s\n", locStr);
+
+        (*env)->ReleaseStringUTFChars(env, name, locStr);
+    }
+
+    //获取类引用
+    clsOut = (*env)->FindClass(env, "TestInfo");
+    //获得该类的构造函数
+    jmethodID mid = (*env)->GetMethodID(env, clsOut, "<init>", "(ILjava/lang/String;)V");
+    jstring s = (*env)->NewStringUTF(env, "c constructed");
+    //构造对象，并且传递参数（即 88， str)
+    return (*env)->NewObject(env, clsOut, mid, 88, s);
 }
